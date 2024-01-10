@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CarMapper">
+	<resultMap type="com.example.entity.Car" id="carMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="passengers" property="passengers"/>
+	</resultMap>
+
+	<select id="findAll" resultMap="carMap">
+		SELECT
+			*
+		FROM
+			cars
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+			<if test="name != null">
+				OR name = #{name}
+			</if>
+			<if test="passengers != null">
+				OR passengers = #{passengers}
+			</if>
+		</where>
+	</select>
+
+	<select id="findById" resultMap="carMap">
+		SELECT * FROM cars WHERE id = #{id}
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		INSERT INTO cars (id, name, passengers) VALUES (nextval('car_id_seq'), #{name}, #{passengers})
+	</insert>
+
+	<update id="update">
+		UPDATE cars SET name = #{name}, passengers = #{passengers} WHERE id = #{id}
+	</update>
+
+	<delete id="deleteById">
+		DELETE FROM cars WHERE id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>車両更新</title>
+</head>
+<body>
+    <h1>車両更新ページ</h1>
+    <form th:action="@{/edit/{id}(id=${id})}" method="post" th:object="${carForm}">
+        <div>
+            <label>車両名</label>
+        </div>
+        <div>
+            <input th:field="*{name}" type="text" placeholder="車両名を入力してください">
+        </div>
+        <div>
+            <label>乗員数</label>
+        </div>
+        <div>
+            <input th:field="*{passengers}" type="number" placeholder="乗員数を入力してください">
+        </div>
+        <div>
+            <input type="submit" value="更新する">
+        </div>
+        <div>
+            <a href="/index">戻る</a>
+        </div>
+    </form>
+</body>
+</html>
