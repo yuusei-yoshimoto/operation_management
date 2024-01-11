@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>車両詳細</title>
+</head>
+<body>
+	<h1>車両詳細</h1>
+	<h4>車両名</h4>
+	<p th:text="${car.name}"></p>
+	<h4>乗員数</h4>
+	<p th:text="${car.passengers}"></p>
+	<h4>運転手ID</h4>
+	<p th:text="${car.driver.id}"></p>
+	<h4>運転手名</h4>
+	<p th:text="${car.driver.name}"></p>
+	<h4>乗客リスト</h4>
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>乗客名</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="customer : ${car.customers}">
+				<td th:text="${customer.id}"></td>
+				<td th:text="${customer.name}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
