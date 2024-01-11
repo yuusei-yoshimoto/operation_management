@@ -7,6 +7,14 @@
 		<id column="id" property="id"/>
 		<result column="name" property="name"/>
 		<result column="passengers" property="passengers"/>
+		<association property="driver" javaType="com.example.entity.Driver">
+			<id column="d_id" property="id"/>
+			<result column="d_name" property="name"/>
+		</association>
+		<collection property="customers" ofType="com.example.entity.Customer">
+			<id column="cu_id" property="id"/>
+			<result column="cu_name" property="name"/>
+		</collection>
 	</resultMap>
 
 	<select id="findAll" resultMap="carMap">
@@ -28,7 +36,26 @@
 	</select>
 
 	<select id="findById" resultMap="carMap">
-		SELECT * FROM cars WHERE id = #{id}
+		SELECT
+			c.id,
+			c.name,
+			c.passengers,
+			d.id AS d_id,
+			d.name AS d_name,
+			cu.id AS cu_id,
+			cu.name AS cu_name
+		FROM
+			cars AS c
+		INNER JOIN
+			drivers AS d
+		ON
+			c.id = d.cars_id
+		LEFT OUTER JOIN
+			customers AS cu
+		ON
+			c.id = cu.cars_id
+		WHERE
+			c.id = #{id}
 	</select>
 
 	<insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
